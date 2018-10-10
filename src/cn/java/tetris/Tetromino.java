@@ -28,18 +28,57 @@ public class Tetromino {
 	
 	
 	public void move_down() {
+		for(Cell c : cells ) {
+			c.moveDown();
+		}
 		
 	}
 	
 	public void move_left() {
-		
+		for(Cell c : cells) {
+			c.moveLeft();	
+		}
 	}
 	
 	public void move_right() {
-		
+		for(Cell c : cells) {
+			c.moveRight();
+		}
 	}
 	
-	public void turn() {
+	
+	/**
+	 * iRow,iCol 中心点
+	 * nRow,nCol 旋转后
+	 */
+	public void turn_right() {
+		Cell center = cells[0];
+		int iRow = center.getRow();
+		int iCol = center.getCol();
+		for(Cell c : cells) {
+			int row = c.getRow();
+			int col = c.getCol();
+			int nRow = iRow-iCol+col;
+			int nCol = iRow+iCol-row;
+			c.setRow(nRow);
+			c.setCol(nCol);
+		}
+	}
+
+
+	public void turn_left() {
+		Cell center = cells[0];
+		int iRow = center.getRow();
+		int iCol = center.getCol();
+		for(Cell c : cells) {
+			int row = c.getRow();
+			int col = c.getCol();
+			int nRow = iRow+iCol-col;
+			int nCol = iCol-iRow+row;
+			c.setRow(nRow);
+			c.setCol(nCol);
+		}
+		
 		
 	}
 	

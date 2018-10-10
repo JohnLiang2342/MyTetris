@@ -46,7 +46,7 @@ public class Cell {
 	public void moveLeft() {
 		col--;
 	}
-	public void moceRight() {
+	public void moveRight() {
 		col++;
 	}
 
