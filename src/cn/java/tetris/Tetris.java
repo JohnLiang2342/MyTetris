@@ -1,6 +1,7 @@
 package cn.java.tetris;
 
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RepaintManager;
 import javax.swing.RowFilter;
@@ -110,22 +112,25 @@ public class Tetris extends JPanel {
 					fast_drop();
 					break;
 				case KeyEvent.VK_P:
-					if(game_state==PLAYING) {
+					if(game_state == PLAYING) {
 						game_state = PAUSE;
 					}
 					break;
 				case KeyEvent.VK_C:
-					if(game_state==PAUSE) {
+					if(game_state == PAUSE) {
 						game_state = PLAYING;
 					}
 					break;
 				case KeyEvent.VK_ENTER:
-					game_state = PLAYING;
-					wall = new Cell[20][10];
-					current_one = Tetromino.random_one();
-					next_one = Tetromino.random_one();
-					total_score = 0;
-					total_line = 0;
+					if(game_state == GAMEOVER) {
+						game_state = PLAYING;
+						wall = new Cell[20][10];
+						current_one = Tetromino.random_one();
+						next_one = Tetromino.random_one();
+						total_score = 0;
+						total_line = 0;
+					}
+					
 					break;		
 				}
 				repaint();
@@ -291,8 +296,19 @@ public class Tetris extends JPanel {
 			g.drawString(show_state[0], 285, 265);
 		}
 		if(game_state == GAMEOVER) {
-			g.drawImage(Tetris.game_over,0,0,null);
-			g.drawString(show_state[2], 285, 265);
+			int res=JOptionPane.showConfirmDialog(null, "游戏结束，是否继续？", "GameOver", JOptionPane.YES_NO_OPTION);
+			if(res==JOptionPane.YES_OPTION){ 
+				game_state = PLAYING;
+				wall = new Cell[20][10];
+				current_one = Tetromino.random_one();
+				next_one = Tetromino.random_one();
+				total_score = 0;
+				total_line = 0;   
+			}else {
+				System.exit(0);
+			} 
+//			g.drawImage(Tetris.game_over,0,0,null);
+//			g.drawString(show_state[2], 285, 265);
 		}
 		if(game_state == PAUSE) {
 			g.drawString(show_state[1], 285, 265);
@@ -506,42 +522,6 @@ public class Tetris extends JPanel {
 		//设置窗口关闭，即程序终止
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//主逻辑
-		panel.start();
-		
-		
-		
-		
+		panel.start();	
 	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
